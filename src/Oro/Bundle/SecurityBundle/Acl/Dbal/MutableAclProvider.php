@@ -895,6 +895,12 @@ class MutableAclProvider extends AclProvider implements MutableAclProviderInterf
             throw new \InvalidArgumentException('There are no changes.');
         }
 
+        foreach ($changes as $change) {
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $change)) {
+                throw new \InvalidArgumentException('Invalid input');
+            }
+        }
+
         return [
             sprintf(
                 'UPDATE %s SET %s WHERE id = ?',
